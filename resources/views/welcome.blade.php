@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>AE  Purified Drinking Station</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
@@ -72,9 +72,9 @@
                 </div>
 
                 <div class="links">
-                    <a href="https://laravel.com/docs">Customer Records</a>
-                    <a href="https://laracasts.com">Order History</a>
-                    <a href="https://laravel-news.com">Payment History</a>
+                    <a href="{{ route('customer.index') }}">Customer Records</a>
+                    <a href="{{ route('customer.index') }}">Order History</a>
+                    <a href="{{ route('customer.index') }}">Payment History</a>
                 </div>
             </div>
         </div>
