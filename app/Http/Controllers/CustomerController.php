@@ -53,8 +53,8 @@ class CustomerController extends Controller {
             
         } catch (\Exception $ex) {
             DB::rollback();
-            Session::flash('status-success', $ex->getMessage());
-            return redirect()->route('customer.create');
+            Session::flash('status-error', $ex->getMessage());
+            return redirect()->route('customer.create')->withInput();
         }
     }
 
@@ -63,11 +63,38 @@ class CustomerController extends Controller {
     }
 
     public function edit($id) {
-        echo 'edit ' . $id;
+        $customer = Customer::find($id);
+        
+        return view('customer.edit', ['customer' => $customer]);
     }
 
-    public function update($id) {
-        echo 'update ' . $id;
+    public function update(Request $request, $id) {
+        
+        try
+        {
+            DB::beginTransaction();
+            
+            $customer = Customer::find($id);
+            
+            $customer->update($request->only([
+                'first_name', 
+                'last_name', 
+                'contact_number', 
+                'contact_address', 
+                'barangay', 
+                'landmark']));
+            
+            DB::commit();
+            
+            Session::flash('status-success', "Customer $id has been updated");
+            
+            return redirect()->route('customer.index');
+            
+        } catch (\Exception $ex) {
+            DB::rollback();
+            Session::flash('status-error', $ex->getMessage());
+            return redirect()->route('customer.edit', $id)->withInput();
+        }
     }
 
     public function destroy($id) {

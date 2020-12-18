@@ -101,16 +101,17 @@
                                 <th class=" text-center" scope="col">Nick Name</th>
                                 <th class=" text-center" scope="col">Contact Number</th>
                                 <th class=" text-center" scope="col" width="10%">Current Balance</th>
-                                <th class=" text-center" scope="col">Date Added</th>
+                                <th width="10%" class=" text-center" scope="col">Date Added</th>
+                                <th width="5%" scope="col">&nbsp;</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($customers as $customer)
                             <tr>
                                 <th class=" text-center" scope="row">{{ $customer->id }}</th>
-                                <td>{{ $customer->first_name }}</td>
+                                <td><a class="alert-link" href="{{ route('customer.show', $customer->id) }}">{{ $customer->first_name }}</a></td>
                                 <td>{{ $customer->last_name }}</td>
-                                <td>{{ $customer->nick_name }}</td>
+                                <td><a class="alert-link" href="{{ route('customer.show', $customer->id) }}">{{ $customer->nick_name }}</a></td>
                                 <td class=" text-center">{{ $customer->contact_number }}</td>
                                 @if($customer->current_balance > 0)
                                 <td class="table-danger text-center">{{ $customer->current_balance }}</td>
@@ -118,6 +119,9 @@
                                 <td class=" text-center">0</td>
                                 @endif
                                 <td class=" text-center">{{ $customer->created_at }}</td>
+                                <td class=" text-center">
+                                    <a class="alert-link" href="{{ route('customer.edit', $customer->id) }}">Update</a>
+                                </td>
                             </tr>
                             @endforeach 
                         </tbody>
