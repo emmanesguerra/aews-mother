@@ -36,13 +36,13 @@
 
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="btn alert alert-primary" role="alert">
-                        <a class="alert-link" href="{{ route('customer.index') }}">Add new record</a>
+                    <div class="btn alert alert-primary" role="alert" style='cursor:default'>
+                        <a class="alert-link" href="{{ route('customer.create') }}">Add new record</a>
                     </div>
-                    <div class="btn alert alert-warning" role="alert">
+                    <div class="btn alert alert-warning" role="alert" style='cursor:default'>
                         <a class="alert-link" href="{{ route('customer.index') }}">Check Order History</a>
                     </div>
-                    <div class="btn alert alert-warning" role="alert">
+                    <div class="btn alert alert-warning" role="alert" style='cursor:default'>
                         <a class="alert-link" href="{{ route('customer.index') }}">Check Payment History</a>
                     </div>
                 </div>
@@ -71,11 +71,11 @@
                                     <div class="col-sm-6">
                                         <select class="form-control" name='show' onChange="this.form.submit()">
                                             @foreach([10,15,20,25] as $ctr)
-                                                @if(Request::get('show') == $ctr)
-                                                <option selected>{{ $ctr }}</option>
-                                                @else 
-                                                <option>{{ $ctr }}</option>
-                                                @endif
+                                            @if(Request::get('show') == $ctr)
+                                            <option selected>{{ $ctr }}</option>
+                                            @else 
+                                            <option>{{ $ctr }}</option>
+                                            @endif
                                             @endforeach
                                         </select>
                                     </div>
@@ -115,9 +115,9 @@
                                 @if($customer->current_balance > 0)
                                 <td class="table-danger text-center">{{ $customer->current_balance }}</td>
                                 @else
-                                <td>0</td>
+                                <td class=" text-center">0</td>
                                 @endif
-                                <td>{{ $customer->created_at }}</td>
+                                <td class=" text-center">{{ $customer->created_at }}</td>
                             </tr>
                             @endforeach 
                         </tbody>

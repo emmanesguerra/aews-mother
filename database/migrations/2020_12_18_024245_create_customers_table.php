@@ -26,6 +26,13 @@ class CreateCustomersTable extends Migration
             $table->string('latitude', 11)->nullable();
             $table->float('current_balance')->nullable();
             $table->timestamps();
+            
+            $table->unique(['first_name', 'nick_name', 'contact_number']);
+            $table->index(['first_name']);
+            $table->index(['last_name']);
+            $table->index(['nick_name']);
+            $table->index(['contact_number']);
+            $table->index(['current_balance']);
         });
     }
 

@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use App\Model\Customer;
+use App\Http\Requests\CustomerStore;
 
 class CustomerController extends Controller {
 
@@ -23,11 +26,36 @@ class CustomerController extends Controller {
     }
 
     public function create() {
-        echo 'create';
+        return view('customer.create');
     }
 
-    public function store() {
-        echo 'store';
+    public function store(CustomerStore $request) {
+        
+        try
+        {
+            DB::beginTransaction();
+            
+            $customer = Customer::create($request->only([
+                'first_name', 
+                'last_name', 
+                'nick_name', 
+                'contact_number', 
+                'contact_address', 
+                'barangay', 
+                'landmark', 
+                'current_balance']));
+            
+            DB::commit();
+            
+            Session::flash('status-success', 'New customer added');
+            
+            return redirect()->route('customer.index');
+            
+        } catch (\Exception $ex) {
+            DB::rollback();
+            Session::flash('status-success', $ex->getMessage());
+            return redirect()->route('customer.create');
+        }
     }
 
     public function show($id) {
