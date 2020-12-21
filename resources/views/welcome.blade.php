@@ -73,8 +73,8 @@
 
                 <div class="links">
                     <a href="{{ route('customer.index') }}">Customer Records</a>
+                    <a href="{{ route('payhistory.index') }}">Payment History</a>
                     <a href="{{ route('customer.index') }}">Order History</a>
-                    <a href="{{ route('customer.index') }}">Payment History</a>
                 </div>
             </div>
         </div>

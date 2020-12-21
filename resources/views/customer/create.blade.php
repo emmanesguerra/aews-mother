@@ -9,7 +9,7 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
 
-        <link href="/css/bootstrap.min.css" rel="stylesheet">
+        <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
 
         <!-- Styles -->
         <style>
@@ -44,7 +44,7 @@
 
 
 
-            <form method="POST" action="{{ route('customer.store') }}" class='col-sm-6 offset-3'>
+            <form method="POST" action="{{ route('customer.store') }}" class='col-sm-8 offset-sm-2'>
 
                 @if(Session::has('status-error'))
                 <p class="alert alert-danger">{{ Session::get('status-error') }}</p>
@@ -106,7 +106,7 @@
                     <div class='col-sm-4'>
                         <div class="form-group">
                             <label style='font-weight: bold'>Current Balance</label>
-                            <input type="number" class="form-control" name="current_balance" value='{{ old('current_balance') }}'  style='text-transform: uppercase'>
+                            <input type="number" class="form-control" name="current_balance" value='{{ old('current_balance', 0) }}'  style='text-transform: uppercase'>
                         </div>
                     </div>
                 </div>

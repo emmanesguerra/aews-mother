@@ -24,7 +24,7 @@ class CreateCustomersTable extends Migration
             $table->string('landmark', 150)->nullable();
             $table->string('longitude', 11)->nullable();
             $table->string('latitude', 11)->nullable();
-            $table->float('current_balance')->nullable();
+            $table->float('current_balance')->default(0);
             $table->timestamps();
             
             $table->unique(['first_name', 'nick_name', 'contact_number']);

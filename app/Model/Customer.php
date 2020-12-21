@@ -59,4 +59,8 @@ class Customer extends Model
         $this->attributes['landmark'] = strtoupper($value);
     }
     
+    public function payments() {
+        return $this->hasMany(PaymentHistory::class, 'customer_id', 'id');
+    }
+    
 }

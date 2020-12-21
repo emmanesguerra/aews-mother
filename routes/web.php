@@ -18,3 +18,8 @@ Route::get('/', function () {
 });
 
 Route::resource('customer', 'CustomerController');
+Route::post('customer/{customer}/pay', 'CustomerController@pay')->name('customer.pay');
+
+
+Route::resource('payhistory', 'PaymentHistoryController');
+Route::get('payhistory/{payhistory}/revert', 'PaymentHistoryController@revert')->name('payhistory.revert');
