@@ -1,131 +1,103 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@include('header')
+<div class="p-3">
 
-        <title>AE  Purified Drinking Station | Customer Records</title>
-
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-
-        <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-size: 20px;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .title {
-                font-size: 64px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="p-3">
-            <div class="title m-b-md">
-                Customer Records
-            </div>
-
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="btn alert alert-primary" role="alert" style='cursor:default'>
-                        <a class="alert-link" href="{{ route('customer.create') }}">Add new record</a>
-                    </div>
-                    <div class="btn alert alert-warning" role="alert" style='cursor:default'>
-                        <a class="alert-link" href="{{ route('payhistory.index') }}">Check Payment History</a>
-                    </div>
-                    <div class="btn alert alert-warning" role="alert" style='cursor:default'>
-                        <a class="alert-link" href="{{ route('customer.index') }}">Check Order History</a>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="row">
-                <div class="col-sm-6">
-                    {{ $customers->withQueryString()->links() }}
-                </div>
-                <div class="col-sm-6">
-                    <form class="form-inline"  method="GET" action="{{ route('customer.index') }}">
-                        <div class="row">
-                            <div class="col-sm-3">
-                                @if(Request::has('wbalance'))
-                                <input type="checkbox" name="wbalance" checked class="form-check-input my-2" id="wbalance" onChange="this.form.submit()">
-                                @else
-                                <input type="checkbox" name="wbalance" class="form-check-input my-2" id="wbalance" onChange="this.form.submit()">
-                                @endif
-                                <label for="wbalance" class="col-form-label">W/Balance</label>
-                            </div>
-
-                            <div class="col-sm-3">
-                                <div class="row">
-                                    <label for="staticEmail" class="col-sm-4 col-form-label">Show</label>
-                                    <div class="col-sm-6">
-                                        <select class="form-control" name='show' onChange="this.form.submit()">
-                                            @foreach([10,15,20,25] as $ctr)
-                                            @if(Request::get('show') == $ctr)
-                                            <option selected>{{ $ctr }}</option>
-                                            @else 
-                                            <option>{{ $ctr }}</option>
-                                            @endif
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-check col-sm-6">
-                                <input class="form-control mr-sm-2" type="search" name="search" value='{{ Request::get('search') }}' placeholder="Search" aria-label="Search">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-sm-12">
-
-                    <table class="table table-striped table-hover">
-                        <thead>
-                            <tr>
-                                <th class=" text-center" scope="col">#</th>
-                                <th class=" text-center" scope="col">Name</th>
-                                <th class=" text-center" scope="col">Contact Number</th>
-                                <th class=" text-center" scope="col">Current Balance</th>
-                                <th class=" text-center" scope="col">Date Added</th>
-                                <th width="5%" scope="col">&nbsp;</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($customers as $customer)
-                            <tr>
-                                <th class=" text-center" scope="row">{{ $customer->id }}</th>
-                                <td class=" text-center"><a class="alert-link" href="{{ route('customer.show', $customer->id) }}">{{ $customer->first_name }} {{ $customer->last_name }} ({{ $customer->nick_name }})</a></td>
-                                <td class=" text-center">{{ $customer->contact_number }}</td>
-                                @if($customer->current_balance > 0)
-                                <td class="table-danger text-center">{{ number_format($customer->current_balance, 2) }}</td>
-                                @else
-                                <td class=" text-center">0</td>
-                                @endif
-                                <td class=" text-center">{{ $customer->created_at->format('M d Y h:i A') }}</td>
-                                <td class=" text-center">
-                                    <a class="alert-link" href="{{ route('customer.edit', $customer->id) }}">Update</a>
-                                </td>
-                            </tr>
-                            @endforeach 
-                        </tbody>
-                    </table>
-
-                    {{ $customers->withQueryString()->links() }}
-                </div>
+    <div class="row">
+        <div class="col-sm-12 mb-5">
+            @include('navigation')
+        </div>
+    </div>
+    <div class="title m-b-md">
+        <div class="row">
+            <div class="col-sm-12">
+                Customer List
+                <a class="btn btn-primary" href="{{ route('customer.create') }}" style="float: right">+ Create New Record</a>
             </div>
         </div>
-    </body>
-</html>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            {{ $customers->withQueryString()->links() }}
+        </div>
+        <div class="col-sm-12">
+            <form class="form-inline" method="GET" action="{{ route('customer.index') }}">
+                <div class="row">
+                    <div class="col-2">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend d-none d-lg-block">
+                                <label class="input-group-text" for="inputGroupSelect01">Show</label>
+                            </div>
+                            <select class="custom-select form-control" name='show' onChange="this.form.submit()">
+                                @foreach([10,15,20,25] as $ctr)
+                                @if(Request::get('show') == $ctr)
+                                <option selected>{{ $ctr }}</option>
+                                @else 
+                                <option>{{ $ctr }}</option>
+                                @endif
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-check m-1">
+                            @if(Request::has('wbalance'))
+                            <input type="checkbox" name="wbalance" checked class="form-check-input" id="wbalance" onChange="this.form.submit()">
+                            @else
+                            <input type="checkbox" name="wbalance" class="form-check-input" id="wbalance" onChange="this.form.submit()">
+                            @endif
+                            <label class="form-check-label" for="defaultCheck1">
+                                W/Balance
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-6 col-lg-4">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text">Search</label>
+                            </div>
+                            <input class="form-control form-control-sm" type="search" name="search" value='{{ Request::get('search') }}' aria-label="Search">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th class=" text-center" scope="col">#</th>
+                        <th class=" text-center" scope="col">Name</th>
+                        <th class=" text-center" scope="col">Contact Number</th>
+                        <th class=" text-center" scope="col">Current Balance</th>
+                        <th class=" text-center" scope="col">Date Added</th>
+                        <th width="5%" scope="col">&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($customers as $customer)
+                    <tr>
+                        <th class=" text-center" scope="row">{{ $customer->id }}</th>
+                        <td class=" text-center"><a class="alert-link" href="{{ route('customer.show', $customer->id) }}">{{ $customer->first_name }} {{ $customer->last_name }} ({{ $customer->nick_name }})</a></td>
+                        <td class=" text-center">{{ $customer->contact_number }}</td>
+                        @if($customer->current_balance > 0)
+                        <td class="table-danger text-center">{{ number_format($customer->current_balance, 2) }}</td>
+                        @else
+                        <td class=" text-center">0</td>
+                        @endif
+                        <td class=" text-center">{{ $customer->created_at->format('M d Y h:i A') }}</td>
+                        <td class=" text-center">
+                            <a class="alert-link" href="{{ route('customer.edit', $customer->id) }}">Update</a>
+                        </td>
+                    </tr>
+                    @endforeach 
+                </tbody>
+            </table>
+
+            {{ $customers->withQueryString()->links() }}
+        </div>
+    </div>
+</div>
+@include('footer')

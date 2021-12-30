@@ -86,7 +86,8 @@ class CustomerController extends Controller {
                 'contact_number', 
                 'contact_address', 
                 'barangay', 
-                'landmark']));
+                'landmark', 
+                'current_balance']));
             
             DB::commit();
             
